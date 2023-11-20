@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://q1413ls4mpvj"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_xqk44"]
+[ext_resource type="Script" path="res://CameraYaw.gd" id="2_y6vtl"]
+[ext_resource type="Script" path="res://CameraPitch.gd" id="3_shid6"]
+[ext_resource type="Script" path="res://Gun.gd" id="4_p4lrx"]
+[ext_resource type="PackedScene" uid="uid://c4w1n4r8owim0" path="res://bounce_mushroom.tscn" id="5_e80yy"]
+[ext_resource type="PackedScene" uid="uid://c8ohpd5614uxk" path="res://slide_mushroom.tscn" id="6_knjjv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqo0k"]
+shading_mode = 2
+disable_ambient_light = true
+albedo_color = Color(0.854902, 0.854902, 0, 1)
+emission_enabled = true
+emission = Color(0.803922, 0.937255, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ohdcj"]
+radius = 0.55
+height = 2.1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4043t"]
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.4312, 16.9911)
+script = ExtResource("1_xqk44")
+SPEED = 10.0
+JUMP_VELOCITY = 7.0
+
+[node name="CameraYaw" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+script = ExtResource("2_y6vtl")
+
+[node name="CameraPitch" type="Node3D" parent="CameraYaw"]
+script = ExtResource("3_shid6")
+
+[node name="Camera3D" type="Camera3D" parent="CameraYaw/CameraPitch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15)
+current = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CameraYaw/CameraPitch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CameraYaw/CameraPitch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.427416)
+radius = 0.001
+radial_segments = 4
+rings = 2
+material = SubResource("StandardMaterial3D_tqo0k")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+
+[node name="Gun" type="Node3D" parent="."]
+script = ExtResource("4_p4lrx")
+scn_bounce_mushroom = ExtResource("5_e80yy")
+scn_slide_mushroom = ExtResource("6_knjjv")
+
+[node name="PlayerArea" type="Area3D" parent="."]
+
+[node name="PlayerAreaCapsule" type="CollisionShape3D" parent="PlayerArea"]
+shape = SubResource("CapsuleShape3D_ohdcj")
+
+[node name="PlayerCollisionCapsule" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4043t")

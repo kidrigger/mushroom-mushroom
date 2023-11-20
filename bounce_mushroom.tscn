@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4w1n4r8owim0"]
+
+[ext_resource type="Script" path="res://bounce_mushroom.gd" id="1_lsbj5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gngu7"]
+albedo_color = Color(0.66746, 0.822707, 1.54018e-06, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oyp3l"]
+radius = 0.52
+
+[node name="Basic Mushroom" type="Area3D"]
+script = ExtResource("1_lsbj5")
+boost_speed = 10.0
+
+[node name="MushroomHead" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.742214, 0, 0, 0, 1, 0, 0.25, 0)
+use_collision = true
+radius = 0.49
+material = SubResource("StandardMaterial3D_gngu7")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="MushroomHead"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.298404, 0)
+operation = 2
+size = Vector3(1, 0.405747, 1)
+
+[node name="MushroomStem" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.742214, 0, 0, 0, 1, 0, 0.125, 0)
+use_collision = true
+radius = 0.25
+height = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141947, 0)
+shape = SubResource("SphereShape3D_oyp3l")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
