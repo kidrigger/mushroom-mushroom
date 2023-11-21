@@ -9,7 +9,6 @@ var shroom_normal: Vector3
 @onready var boing_audio_stream_player_3d_2 = $"boing-AudioStreamPlayer3D2"
 
 func _ready():
-	print(mushroom_model)
 	mushroom_model.get_node("AnimationPlayer").play("spawn", -1, 4, false)
 	pop_audio_stream_player_3d.play()
 
