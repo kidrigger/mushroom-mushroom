@@ -4,6 +4,9 @@ extends Node3D
 var boost_factor: float
 var shroom_normal: Vector3
 
+signal begin_slide
+signal end_slide
+
 func initialize(position: Vector3, surface_normal: Vector3, player_position: Vector3):
 	var normal = surface_normal.normalized()
 	var player_dir = player_position - position
@@ -17,8 +20,8 @@ var possible_body_found = false
 var possible_body_velocity: Vector3
 
 func _on_body_entered(body: Node):
-	
 	if body is CharacterBody3D:
+		begin_slide.emit()
 		if possible_body_found:
 			var planar = possible_body_velocity - shroom_normal * shroom_normal.dot(possible_body_velocity);
 			body.velocity = planar * boost_factor
@@ -32,3 +35,8 @@ func _on_area_entered(area):
 		possible_body_found = true
 		possible_body_velocity = possible_body.velocity
 	
+
+
+func _on_area_exited(area):
+	end_slide.emit()
+	pass # Replace with function body.

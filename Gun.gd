@@ -9,7 +9,7 @@ var scn_bounce_mushroom: PackedScene
 var scn_slide_mushroom: PackedScene
 
 @onready
-var n_level = get_tree().root
+var n_level = get_tree().root.get_node("Prototype World/MushroomManager")
 	
 func _physics_process(delta):
 	

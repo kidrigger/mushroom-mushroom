@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dm1hypgk0s3nm"]
+[gd_scene load_steps=6 format=3 uid="uid://dm1hypgk0s3nm"]
 
 [ext_resource type="PackedScene" uid="uid://d1530goxlridv" path="res://tree.tscn" id="1_6yucm"]
 [ext_resource type="Material" uid="uid://c3l47mwtaahwu" path="res://floor.tres" id="1_7i6hn"]
 [ext_resource type="Script" path="res://Config.gd" id="3_yhtfl"]
 [ext_resource type="PackedScene" uid="uid://q1413ls4mpvj" path="res://player.tscn" id="4_vv6lm"]
+[ext_resource type="Script" path="res://MushroomManager.gd" id="5_lbr5n"]
 
 [node name="Prototype World" type="Node3D"]
 
@@ -93,3 +94,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.9999, 21.1606, 29.0701)
 script = ExtResource("3_yhtfl")
 
 [node name="Player" parent="." instance=ExtResource("4_vv6lm")]
+
+[node name="MushroomManager" type="Node3D" parent="."]
+script = ExtResource("5_lbr5n")
+
+[connection signal="begin_slide" from="MushroomManager" to="Player" method="enable_slide"]
+[connection signal="child_entered_tree" from="MushroomManager" to="MushroomManager" method="_new_mushroom"]
+[connection signal="end_slide" from="MushroomManager" to="Player" method="disable_slide"]
